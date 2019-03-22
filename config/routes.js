@@ -32,8 +32,12 @@ module.exports.routes = {
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
   ***************************************************************************/
-  'POST /api/block' : { controller: 'BlockController', action: 'postNewBlock' },
-  'GET /api/block/:index' : {controller: 'BlockController', action:'getBlockByIndex'},
+  'POST /block' : { controller: 'BlockController', action: 'postNewBlock' },
+  'GET /block/:index' : {controller: 'BlockController', action:'getBlockByIndex'},
+  'GET /stars/hash/:hash' : {controller: 'BlockController', action:'getBlockByHash'},
+  'GET /stars/address/:address' : {controller: 'BlockController', action:'getBlockByAddress'},
+  'POST /requestValidation' : { controller: 'MempoolController', action: 'requestValidation' },
+  'POST /message-signature/validate' : { controller: 'MempoolController', action: 'validateSignature' },
 
 
 };

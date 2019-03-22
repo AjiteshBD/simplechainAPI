@@ -74,6 +74,47 @@ const BlockClass = require('./Block.js');
 
 
 
+  async getBlockByHash(hash)
+  {
+          //Return block data from levelDB
+        console.log(hash);
+        try{
+          let block = await levelSandbox.getBlockByHash(hash);
+          let prevBlockDetails= block;//await JSON.parse(block);
+          let blockDetails = await JSON.parse(JSON.stringify(block).toString());
+          console.log(`Block # :` + hash +`Details :: `+ prevBlockDetails);
+          return prevBlockDetails;
+        }
+        catch(err)
+        {
+          console.log(`err::::::::::`+err);
+          throw err;
+        }
+
+  };
+
+
+  async getBlockByAddress(address)
+  {
+          //Return block data from levelDB
+        console.log('In simpleChain==='+address);
+        try{
+          let block = await levelSandbox.getBlockByAddress(address);
+          let prevBlockDetails= block;//await JSON.parse(block);
+          //let blockDetails = await JSON.parse(JSON.stringify(block).toString());
+          console.log(`Block # :` + address +`Details :: `+ prevBlockDetails);
+          return prevBlockDetails;
+        }
+        catch(err)
+        {
+          console.log(`err::::::::::`+err);
+          throw err;
+        }
+
+  };
+
+
+
 
 
 //validate block

@@ -35,6 +35,60 @@ function getLevelDBData(key){
         });
     }
 
+
+
+async  function  getBlockByHash(hash) {
+
+       let block = null;
+      return new Promise(function(resolve, reject){
+          db.createReadStream()
+           .on('data', function (data) {
+             let obj = JSON.parse(data.value);
+
+             console.log('::'+ obj.hash);
+
+               if(obj.hash === hash){
+                 console.log("FOUND::"+obj.hash);
+                   block = obj;
+               }
+
+           })
+           .on('error', function (err) {
+              reject(err);
+           })
+           .on('close', function () {
+              console.log(':::::'+block);
+               resolve(block);
+           });
+       });
+
+   }
+
+
+
+        function getBlockByAddress(address){
+                let block = null;
+                return  new Promise(function(resolve, reject) {
+                    db.createReadStream()
+                    .on('data',function(data){
+                      let obj = JSON.parse(data.value);
+                        console.log(data);
+                        if(obj.body.address == address)
+                        {
+                          block =obj;
+                        }
+                    }).on('error', function(err){
+                        reject(err);
+                    })
+                    .on('close',function(){
+                      console.log(block);
+                        resolve(block);
+                    });
+                });
+            }
+
+
+
 // Add data to levelDB with value
 function addDataToLevelDB(value) {
     let i = 0;
@@ -91,3 +145,5 @@ module.exports.addDataToLevelDB = addDataToLevelDB;
 module.exports.getBlocksCount = getBlocksCount;
 module.exports.getLevelDBData = getLevelDBData;
 module.exports.addLevelDBData = addLevelDBData;
+module.exports.getBlockByHash = getBlockByHash;
+module.exports.getBlockByAddress = getBlockByAddress;
